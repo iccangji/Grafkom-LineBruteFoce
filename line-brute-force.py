@@ -35,9 +35,9 @@ def connect(): #function menentukan dan menapilkan titik
         m = np.Infinity
         p = x[0]
         if x[0]>x[1]:
-            p = y[1]
-        xline = np.append(x,(x[0])+1)
-        yline = np.append(y,y[1])
+            p = x[1]
+        xline = np.append(x,p+1)
+        yline = np.append(y,y[0])
     else:
         if m<1:#jika gradien < 1
             m = (y[1]-y[0])/(x[1]-x[0])#gradien = (y2-y1)/(x2-x1)
