@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import TextBox
 
-fig, ax = plt.subplots()
-plt.suptitle('Membentuk Garis Dengan Algoritma Brute Force')
+fig, ax = plt.subplots() #membuat sublot figur dan sumbu
+plt.suptitle('Membentuk Garis Dengan Algoritma Brute Force') #judul figur
 plt.subplots_adjust(bottom=0.2)
-x = np.array([3,9])
-y = np.array([1,5])
+x = np.array([3,9]) #array titik awal sumbu x
+y = np.array([1,5]) #array titik awal sumbu y
 
 def connect():
     ax.cla()
@@ -72,7 +72,7 @@ def connect():
     l1.set_label('Garis Penghubung')
     ax.legend()
     
-def submit(text): #function untuk input titik koordinat
+def submit(text):
     data = eval(text)
     x[0],x[1] = data[0][0],data[1][0]
     y[0],y[1] = data[0][1],data[1][1]
@@ -83,8 +83,8 @@ def submit(text): #function untuk input titik koordinat
     
 connect()
 
-axbox = plt.axes([0.2, 0.05, 0.2, 0.05]) #kolom input titik koordinat
-text_box = TextBox(axbox, 'Titik Koordinat', initial='(3,1),(9,5)')
-text_box.on_submit(submit)
+axbox = plt.axes([0.2, 0.05, 0.2, 0.05]) #letak input titik koordinat
+text_box = TextBox(axbox, 'Titik Koordinat', initial='(3,1),(9,5)') #menampilkan kolom input
+text_box.on_submit(submit) #trigger ke function submit
 
 plt.show()
