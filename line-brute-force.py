@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.widgets import TextBox
 
 fig, ax = plt.subplots()
 plt.suptitle('Membentuk Garis Dengan Algoritma Brute Force')
@@ -51,23 +52,39 @@ def connect():
                 xline.append(round(x2))
                 y2+=1
                 i+=1
+    np.array(xline)
+    np.array(yline)
+    print('Titik Koordinat: (', x[0], ',',y[0],') (',x[1],',',y[1],')')
+    print('Titik Penghubung: ',end=' ')
+    for i in range (len(xline)):
+        if i < len(xline)-1:
+            print('(',xline[i],',', yline[i],end='),')
+        else:
+            print('(',xline[i],',',yline[i],end=')')
+    print()
+    print('Gradien = ',m)
+    print()
+
+    l0, = ax.plot(xline, yline ,'o')
+    l1, = ax.plot(x, y)
+
+    l0.set_label('Titik Penghubung')
+    l1.set_label('Garis Penghubung')
+    ax.legend()
+    
+def submit(text): #function untuk input titik koordinat
+    data = eval(text)
+    x[0],x[1] = data[0][0],data[1][0]
+    y[0],y[1] = data[0][1],data[1][1]
+    l0.set_data(x,y)
+    l1.set_data(x,y)
+    ax.autoscale_view()
+    connect()
+    
 connect()
-np.array(xline)
-np.array(yline)
-print('Titik Koordinat: (', x[0], ',',y[0],') (',x[1],',',y[1],')')
-print('Titik Penghubung: ',end=' ')
-for i in range (len(xline)):
-    if i < len(xline)-1:
-        print('(',xline[i],',', yline[i],end='),')
-    else:
-        print('(',xline[i],',',yline[i],end=')')
-print()
 
-l0, = ax.plot(xline, yline ,'o')
-l1, = ax.plot(x, y)
+axbox = plt.axes([0.2, 0.05, 0.2, 0.05]) #kolom input titik koordinat
+text_box = TextBox(axbox, 'Titik Koordinat', initial='(3,1),(9,5)')
+text_box.on_submit(submit)
 
-l0.set_label('Titik Penghubung')
-l1.set_label('Garis Penghubung')
-ax.legend()
-plt.grid()
 plt.show()
