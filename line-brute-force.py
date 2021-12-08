@@ -8,21 +8,21 @@ plt.subplots_adjust(bottom=0.2)
 x = np.array([3,9]) #array titik awal sumbu x
 y = np.array([1,5]) #array titik awal sumbu y
 
-def connect():
-    ax.cla()
-    ax.grid()
+def connect(): #function menentukan dan menapilkan titik
+    ax.cla() #membersihkan grafik
+    ax.grid() #menambahkan garis-garis pada grafik
     
-    global x,y,l0,l1,m,xline,yline
+    global x,y,l0,l1,m #membuat variabel pada function menjadi global
 
-    xline,yline = [],[]
-    m = 0
-    if x[0]==x[1]:
+    xline,yline = [],[] #membuat array untuk titik penghubung
+    m = 0#variabel gradien
+    if x[0]==x[1]: #jika x1=x2
         p = y[0]
-        if y[0]>y[1]:
+        if y[0]>y[1]:#jika x1>x2
             p = y[1]
-        xline = np.append(x,x[0])
-        yline = np.append(y,p+1)
-    elif y[0]==y[1]:
+        xline = np.append(x,x[0])#menambahakan titik penghubung sumbu x
+        yline = np.append(y,p+1)#menambahakan titik penghubung sumbu y
+    elif y[0]==y[1]:#jika y1=y2
         m = np.Infinity
         p = x[0]
         if x[0]>x[1]:
@@ -30,18 +30,18 @@ def connect():
         xline = np.append(x,(x[0])+1)
         yline = np.append(y,y[1])
     else:
-        if m<1:
-            m = (y[1]-y[0])/(x[1]-x[0])
-            n = abs(x[1]-x[0])
-            x2 = x[0]
+        if m<1:#jika gradien < 1
+            m = (y[1]-y[0])/(x[1]-x[0])#gradien = (y2-y1)/(x2-x1)
+            n = abs(x[1]-x[0])#n = x2-x1
+            x2 = x[0]#x = x1
             i = 1
-            while i <= n+1:
+            while i <= n+1: #iterasi untuk menentukan titik penghubung
                 y2 = y[0]+m*(x2-x[0])
                 xline.append(x2)
                 yline.append(round(y2))
                 x2+=1
                 i+=1
-        else:
+        else:#jika gradien > 1
             m = (x[1]-x[0])/(y[1]-y[0])
             n = abs(y[1]-y[0])
             y2 = y[0]
@@ -52,11 +52,11 @@ def connect():
                 xline.append(round(x2))
                 y2+=1
                 i+=1
-    np.array(xline)
+    np.array(xline) #mengubah array menjadi array numpy
     np.array(yline)
-    print('Titik Koordinat: (', x[0], ',',y[0],') (',x[1],',',y[1],')')
-    print('Titik Penghubung: ',end=' ')
-    for i in range (len(xline)):
+    print('Titik Koordinat: (', x[0], ',',y[0],') (',x[1],',',y[1],')')#Menampilkan titik koordinat di terminal
+    print('Titik Penghubung: ',end=' ')#Menampilkan titik penghubung di terminal
+    for i in range (len(xline)):#iterasi untuk menampilkan titk penghubung
         if i < len(xline)-1:
             print('(',xline[i],',', yline[i],end='),')
         else:
@@ -65,18 +65,18 @@ def connect():
     print('Gradien = ',m)
     print()
 
-    l0, = ax.plot(xline, yline ,'o')
-    l1, = ax.plot(x, y)
+    l0, = ax.plot(xline, yline ,'o')#Menampilkan titik penghubng
+    l1, = ax.plot(x, y)#Menampilkan garis penghubung
 
-    l0.set_label('Titik Penghubung')
+    l0.set_label('Titik Penghubung')#Menampilkan keterangan
     l1.set_label('Garis Penghubung')
     ax.legend()
     
-def submit(text):
-    data = eval(text)
-    x[0],x[1] = data[0][0],data[1][0]
+def submit(text):#function untuk input titik koordinat
+    data = eval(text)#mengubah string menjadi tuple
+    x[0],x[1] = data[0][0],data[1][0]#memasukkan input ke array
     y[0],y[1] = data[0][1],data[1][1]
-    l0.set_data(x,y)
+    l0.set_data(x,y)#mengubah titik koordinat pada grafik
     l1.set_data(x,y)
     ax.autoscale_view()
     connect()
